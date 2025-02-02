@@ -13,9 +13,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const maxHeight = container.clientHeight;
         let scale = Math.min(maxWidth / img.width, maxHeight / img.height);
         
-        // Assurez-vous que l'image n'est pas trop petite
-        if (scale * img.width < 300 || scale * img.height < 300) {
-            scale = Math.max(300 / img.width, 300 / img.height);
+        // Assurez-vous que l'image a une taille minimale visible
+        const minSize = 300; // Taille minimale en pixels
+        if (scale * img.width < minSize || scale * img.height < minSize) {
+            scale = Math.max(minSize / img.width, minSize / img.height);
         }
         
         bwCanvas.width = img.width * scale;
