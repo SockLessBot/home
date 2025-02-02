@@ -27,7 +27,9 @@ button {
 }
 
 #loadingScreen {
-    border: 1px solid red; /* Pour vérifier si loadingScreen est bien là */
+    border: 1px solid red;
+    width: 200px; /* Assurez-vous qu'il a une largeur */
+    height: auto; /* Ou une hauteur fixe si nécessaire */
 }
 
 #loadingCanvasBW, #loadingCanvasColor {
