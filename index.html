@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SocklessBot Mini App</title>
-    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
-    
     <style>
         body, html {
             margin: 0;
@@ -27,15 +25,13 @@
             width: 200px;
             height: auto;
         }
-        #loadingBar {
+        #percentage {
             position: absolute;
-            bottom: 0;
-            left: 50%;
+            bottom: -30px; /* Ajustez cette valeur pour positionner le pourcentage sous l'image */
             width: 200px;
-            height: 2px;
-            background-color: #000;
-            transform: translateX(-50%);
-            transition: transform 0.2s ease-out;
+            text-align: center;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
         }
         #appContent {
             display: none;
@@ -46,7 +42,7 @@
     <div id="loadingScreen">
         <canvas id="loadingCanvasBW"></canvas>
         <canvas id="loadingCanvasColor"></canvas>
-        <div id="loadingBar"></div>
+        <div id="percentage">0%</div>
     </div>
     <div id="appContent">
         <!-- Contenu de la page d'accueil ici -->
