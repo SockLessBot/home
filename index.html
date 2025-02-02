@@ -20,10 +20,9 @@
             text-align: center;
             z-index: 1000;
         }
-        #loadingImage {
+        #loadingCanvas {
             width: 200px;
             height: auto;
-            filter: saturate(0%);
         }
         #loadingBar {
             position: absolute;
@@ -42,7 +41,7 @@
 </head>
 <body>
     <div id="loadingScreen">
-        <img id="loadingImage" src="AngrySockLoading.jpg" alt="Chargement en cours">
+        <canvas id="loadingCanvas"></canvas>
         <div id="loadingBar"></div>
     </div>
     <div id="appContent">
