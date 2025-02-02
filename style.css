@@ -25,3 +25,15 @@ button {
     height: 600px;
     border: 1px solid black;
 }
+
+#loadingScreen {
+    border: 1px solid red; /* Pour vérifier si loadingScreen est bien là */
+}
+
+#loadingCanvasBW, #loadingCanvasColor {
+    border: 1px solid blue; /* Pour vérifier si les canvas sont bien là */
+}
+
+#percentage {
+    border: 1px solid green; /* Pour vérifier si le pourcentage est bien là */
+}
