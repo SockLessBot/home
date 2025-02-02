@@ -5,23 +5,24 @@ body, html {
     justify-content: center;
     align-items: center;
     background-color: #4A235A; /* Couleur prune foncée */
-    background-image: url('sock_texture.jpg'); /* Ajoutez votre texture de chaussette ici */
-    background-size: cover;
+    background-image: url('sock_texture.jpg'); /* Assurez-vous que l'image est assez grande ou répétée */
+    background-size: auto; /* Pour que l'image soit répétée si nécessaire */
+    background-repeat: repeat; /* Répétition de l'image de fond */
 }
 
 #loading-screen {
     text-align: center;
     width: 100%;
-    max-width: 400px; /* ou une valeur qui vous convient pour la taille maximale de l'image */
+    max-width: 400px;
 }
 
 #loading-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 1 / 1; /* Pour garder l'image carrée */
+    aspect-ratio: 1 / 1;
     display: inline-block;
-    border-radius: 15px; /* Angles arrondis pour l'image */
-    overflow: hidden; /* Pour que les angles arrondis affectent l'image */
+    border-radius: 15px;
+    overflow: hidden;
 }
 
 canvas {
@@ -36,7 +37,7 @@ canvas {
     margin-top: 20px;
     font-size: 24px;
     font-family: 'Arial', sans-serif;
-    color: #FFF; /* Couleur du texte visible sur fond prune */
+    color: #FFF;
     font-weight: bold;
     animation: pulse 2s infinite;
 }
