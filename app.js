@@ -2,13 +2,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const bwCanvas = document.getElementById('bwCanvas');
     const colorCanvas = document.getElementById('colorCanvas');
     const percentageElement = document.getElementById('percentage');
-    
+    const container = document.getElementById('loading-container');
+
     let img = new Image();
     img.src = 'AngrySockLoading.jpg';
 
     img.onload = function() {
-        const container = document.getElementById('loading-container');
-        const scale = Math.min(container.clientWidth / img.width, container.clientHeight / img.height);
+        // Calculer la taille de l'image en fonction du conteneur tout en gardant l'aspect ratio
+        const maxWidth = container.clientWidth;
+        const maxHeight = container.clientHeight;
+        const scale = Math.min(maxWidth / img.width, maxHeight / img.height);
         
         bwCanvas.width = img.width * scale;
         bwCanvas.height = img.height * scale;
@@ -42,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 ctxColor.drawImage(img, 0, img.height - height / scale, img.width, height / scale, 0, colorCanvas.height - height, colorCanvas.width, height);
                 requestAnimationFrame(animate);
             } else {
-                window.location.href = 'index2.html'; // Changé pour refléter le nom de la nouvelle page
+                window.location.href = 'index2.html';
             }
         }
         animate();
