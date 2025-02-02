@@ -1,3 +1,29 @@
+// Chargement
+document.addEventListener('DOMContentLoaded', (event) => {
+    const loadingScreen = document.getElementById('loadingScreen');
+    const loadingImage = document.getElementById('loadingImage');
+    const appContent = document.getElementById('appContent');
+
+    // Fonction pour simuler le chargement
+    function simulateLoading() {
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += 1;
+            if (progress > 100) {
+                clearInterval(interval);
+                loadingScreen.style.display = 'none';
+                appContent.style.display = 'block';
+            } else {
+                // Change la saturation de l'image en fonction du progrès
+                loadingImage.style.filter = `saturate(${progress}%)`;
+            }
+        }, 20); // Ajustez la vitesse de chargement ici
+    }
+
+    simulateLoading();
+});
+
+
 document.addEventListener('DOMContentLoaded', (event) => {
     if (window.Telegram.WebApp) {
         window.Telegram.WebApp.ready();
