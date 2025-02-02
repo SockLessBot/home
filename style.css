@@ -5,15 +5,15 @@ body, html {
     justify-content: center;
     align-items: center;
     background-color: #4A235A; /* Couleur prune foncée */
-    background-image: url('sock_texture.jpg'); /* Assurez-vous que l'image est assez grande ou répétée */
-    background-size: auto; /* Pour que l'image soit répétée si nécessaire */
-    background-repeat: repeat; /* Répétition de l'image de fond */
+    background-image: url('sock_texture.jpg');
+    background-size: cover; /* Assure que l'image couvre toute la zone sans distorsion */
+    background-position: center; /* Centre l'image de fond */
 }
 
 #loading-screen {
     text-align: center;
     width: 100%;
-    max-width: 400px;
+    max-width: 400px; /* Ajustez selon vos besoins */
 }
 
 #loading-container {
