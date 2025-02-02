@@ -8,6 +8,7 @@ body, html {
     background-image: url('sock_texture.jpg');
     background-size: cover; /* Assure que l'image couvre toute la zone sans distorsion */
     background-position: center; /* Centre l'image de fond */
+    background-repeat: no-repeat; /* Empêche la répétition de l'image */
 }
 
 #loading-screen {
