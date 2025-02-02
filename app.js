@@ -55,6 +55,8 @@ document.addEventListener('DOMContentLoaded', function() {
             ctxBW.putImageData(imgData, 0, 0);
 
             let progress = 0;
+            const startTime = Date.now(); // Enregistrer le temps de début de l'animation
+
             function animate() {
                 if (progress < 100) {
                     progress += 1;
@@ -66,11 +68,26 @@ document.addEventListener('DOMContentLoaded', function() {
                     ctxColor.drawImage(img, 0, img.height - height / scale, img.width, height / scale, 0, colorCanvas.height - height, colorCanvas.width, height);
                     requestAnimationFrame(animate);
                 } else {
-                    // Vérifier le nom d'utilisateur et rediriger
-                    if (username === correctUsername) {
-                        window.location.href = 'index2.html';
+                    const endTime = Date.now();
+                    const elapsedTime = endTime - startTime;
+                    
+                    // Si l'animation a pris moins de 4 secondes, attendre la différence
+                    if (elapsedTime < 4000) {
+                        setTimeout(function() {
+                            // Vérifier le nom d'utilisateur et rediriger
+                            if (username === correctUsername) {
+                                window.location.href = 'index2.html';
+                            } else {
+                                window.location.href = 'soon.html';
+                            }
+                        }, 4000 - elapsedTime);
                     } else {
-                        window.location.href = 'soon.html';
+                        // Si l'animation a déjà pris plus de 4 secondes, rediriger immédiatement
+                        if (username === correctUsername) {
+                            window.location.href = 'index2.html';
+                        } else {
+                            window.location.href = 'soon.html';
+                        }
                     }
                 }
             }
