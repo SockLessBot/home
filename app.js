@@ -5,26 +5,28 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const loadingBar = document.getElementById('loadingBar');
     const appContent = document.getElementById('appContent');
 
-    // Fonction pour simuler le chargement
+    // Fonction pour simuler le chargement avec un délai
     function simulateLoading() {
-        let progress = 0;
-        const interval = setInterval(() => {
-            progress += 1;
-            if (progress > 100) {
-                clearInterval(interval);
-                loadingScreen.style.display = 'none';
-                appContent.style.display = 'block';
-            } else {
-                // Ajuste la hauteur de la barre de chargement
-                const scaleY = progress / 100;
-                loadingBar.style.transform = `scaleY(${scaleY})`;
-                
-                // Change la saturation de l'image en fonction du progrès
-                // On applique un masque pour que seulement la partie sous la barre soit colorée
-                const saturation = Math.min(progress, 100);
-                loadingImage.style.filter = `saturate(${saturation}%)`;
-            }
-        }, 20); // Ajustez la vitesse de chargement ici
+        setTimeout(() => {
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 1;
+                if (progress > 100) {
+                    clearInterval(interval);
+                    loadingScreen.style.display = 'none';
+                    appContent.style.display = 'block';
+                } else {
+                    // Ajuste la position de la barre de chargement
+                    const translateY = (progress / 100) * loadingImage.height;
+                    loadingBar.style.transform = `translateX(-50%) translateY(${translateY}px)`;
+                    
+                    // Change la saturation de l'image en dessous de la barre
+                    // Note: Ceci est une simulation visuelle car on ne peut pas directement masquer une partie de l'image avec CSS
+                    const saturation = Math.min(progress, 100);
+                    loadingImage.style.filter = `saturate(${saturation}%)`;
+                }
+            }, 20); // Ajustez la vitesse de chargement ici
+        }, 2000); // Délai de 2 secondes avant le début du chargement
     }
 
     simulateLoading();
