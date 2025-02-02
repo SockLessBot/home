@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     const loadingScreen = document.getElementById('loadingScreen');
     const loadingImage = document.getElementById('loadingImage');
+    const loadingBar = document.getElementById('loadingBar');
     const appContent = document.getElementById('appContent');
 
     // Fonction pour simuler le chargement
@@ -16,6 +17,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
             } else {
                 // Change la saturation de l'image en fonction du progrès
                 loadingImage.style.filter = `saturate(${progress}%)`;
+                
+                // Ajuste la hauteur de la barre de chargement
+                const barHeight = (progress / 100) * window.innerHeight;
+                loadingBar.style.height = `${barHeight}px`;
             }
         }, 20); // Ajustez la vitesse de chargement ici
     }
