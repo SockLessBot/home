@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const username = getParameterByName('username');
     const correctUsername = 'sbst_b'; // Votre nom d'utilisateur Telegram
 
-    // Lancer l'animation de chargement
+    // Lancer l'animation de chargement pour tous
     startLoadingAnimation();
 
     function startLoadingAnimation() {
@@ -71,24 +71,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     const endTime = Date.now();
                     const elapsedTime = endTime - startTime;
                     
-                    // Si l'animation a pris moins de 4 secondes, attendre la différence
-                    if (elapsedTime < 4000) {
-                        setTimeout(function() {
-                            // Vérifier le nom d'utilisateur et rediriger
-                            if (username === correctUsername) {
-                                window.location.href = 'index2.html';
-                            } else {
-                                window.location.href = 'soon.html';
-                            }
-                        }, 4000 - elapsedTime);
-                    } else {
-                        // Si l'animation a déjà pris plus de 4 secondes, rediriger immédiatement
+                    // Attendre au moins 4 secondes avant de rediriger
+                    setTimeout(function() {
+                        // Vérifier le nom d'utilisateur et rediriger
                         if (username === correctUsername) {
                             window.location.href = 'index2.html';
                         } else {
                             window.location.href = 'soon.html';
                         }
-                    }
+                    }, Math.max(0, 4000 - elapsedTime));
                 }
             }
             animate();
