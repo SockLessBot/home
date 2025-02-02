@@ -4,33 +4,41 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f0f0f0;
+    background-color: #4A235A; /* Couleur prune foncée */
+    background-image: url('sock_texture.jpg'); /* Ajoutez votre texture de chaussette ici */
+    background-size: cover;
 }
 
 #loading-screen {
     text-align: center;
+    width: 100%;
+    max-width: 400px; /* ou une valeur qui vous convient pour la taille maximale de l'image */
 }
 
 #loading-container {
     position: relative;
-    width: 300px;
-    height: 300px;
-    display: inline-block; /* Pour centrer verticalement et horizontalement */
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Pour garder l'image carrée */
+    display: inline-block;
+    border-radius: 15px; /* Angles arrondis pour l'image */
+    overflow: hidden; /* Pour que les angles arrondis affectent l'image */
 }
 
 canvas {
     position: absolute;
     left: 0;
     top: 0;
+    width: 100%;
+    height: 100%;
 }
 
 #percentage {
-    margin-top: 20px; /* Espace entre image et texte */
+    margin-top: 20px;
     font-size: 24px;
-    font-family: 'Arial', sans-serif; /* Choisissez une police */
-    color: #333; /* Couleur du texte */
-    font-weight: bold; /* Texte en gras */
-    animation: pulse 2s infinite; /* Animation de pulsation */
+    font-family: 'Arial', sans-serif;
+    color: #FFF; /* Couleur du texte visible sur fond prune */
+    font-weight: bold;
+    animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
@@ -42,5 +50,12 @@ canvas {
     }
     100% {
         transform: scale(1);
+    }
+}
+
+/* Pour rendre le texte responsive */
+@media (max-width: 480px) {
+    #percentage {
+        font-size: 18px;
     }
 }
