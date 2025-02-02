@@ -3,15 +3,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const colorCanvas = document.getElementById('colorCanvas');
     const percentageElement = document.getElementById('percentage');
     
-    const ctxBW = bwCanvas.getContext('2d');
-    const ctxColor = colorCanvas.getContext('2d');
-
     let img = new Image();
     img.src = 'AngrySockLoading.jpg';
 
     img.onload = function() {
-        ctxBW.drawImage(img, 0, 0, 300, 300);
-        var imgData = ctxBW.getImageData(0, 0, 300, 300);
+        const container = document.getElementById('loading-container');
+        const scale = Math.min(container.clientWidth / img.width, container.clientHeight / img.height);
+        
+        bwCanvas.width = img.width * scale;
+        bwCanvas.height = img.height * scale;
+        colorCanvas.width = img.width * scale;
+        colorCanvas.height = img.height * scale;
+
+        const ctxBW = bwCanvas.getContext('2d');
+        const ctxColor = colorCanvas.getContext('2d');
+
+        // Dessiner l'image en noir et blanc
+        ctxBW.drawImage(img, 0, 0, bwCanvas.width, bwCanvas.height);
+        var imgData = ctxBW.getImageData(0, 0, bwCanvas.width, bwCanvas.height);
         var data = imgData.data;
         for (var i = 0; i < data.length; i += 4) {
             var avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
@@ -27,13 +36,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 progress += 1;
                 percentageElement.textContent = `${progress}%`;
                 
-                ctxColor.clearRect(0, 0, 300, 300);
+                ctxColor.clearRect(0, 0, colorCanvas.width, colorCanvas.height);
                 
-                const height = img.height * (progress / 100);
-                ctxColor.drawImage(img, 0, img.height - height, img.width, height, 0, 300 - (300 * (progress / 100)), 300, 300 * (progress / 100));
+                const height = img.height * (progress / 100) * scale;
+                ctxColor.drawImage(img, 0, img.height - height / scale, img.width, height / scale, 0, colorCanvas.height - height, colorCanvas.width, height);
                 requestAnimationFrame(animate);
             } else {
-                window.location.href = 'index2.html'; // Remplacez par l'URL de votre nouvelle page
+                window.location.href = 'index2.html'; // Changé pour refléter le nom de la nouvelle page
             }
         }
         animate();
