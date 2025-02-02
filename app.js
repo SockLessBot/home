@@ -11,13 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const username = getParameterByName('username');
     const correctUsername = 'sbst_b'; // Votre nom d'utilisateur Telegram
 
-    if (username === correctUsername) {
-        // Lancer l'animation de chargement
-        startLoadingAnimation();
-    } else {
-        // Rediriger vers une page d'attente
-        window.location.href = 'soon.html';
-    }
+    // Lancer l'animation de chargement
+    startLoadingAnimation();
 
     function startLoadingAnimation() {
         const bwCanvas = document.getElementById('bwCanvas');
@@ -71,8 +66,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     ctxColor.drawImage(img, 0, img.height - height / scale, img.width, height / scale, 0, colorCanvas.height - height, colorCanvas.width, height);
                     requestAnimationFrame(animate);
                 } else {
-                    // Redirection à la fin de l'animation
-                    window.location.href = 'index2.html';
+                    // Vérifier le nom d'utilisateur et rediriger
+                    if (username === correctUsername) {
+                        window.location.href = 'index2.html';
+                    } else {
+                        window.location.href = 'soon.html';
+                    }
                 }
             }
             animate();
