@@ -42,9 +42,15 @@ canvas {
     margin-top: 20px;
     font-size: 24px;
     font-family: 'Arial', sans-serif;
-    color: #FFF;
+    color: #FFD700; /* Couleur dorée pour un contraste élevé avec le fond prune */
     font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Ombre pour le faire ressortir sur la texture */
     animation: pulse 2s infinite;
+    background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent pour améliorer la lisibilité */
+    padding: 10px 20px; /* Espace autour du texte */
+    border-radius: 10px; /* Coins arrondis */
+    display: inline-block; /* Pour que le fond ne prenne que la largeur du texte */
+    animation: pulse 2s infinite, float 3s infinite; /* Ajoute l'animation de flottement */
 }
 
 @keyframes pulse {
@@ -56,6 +62,14 @@ canvas {
     }
     100% {
         transform: scale(1);
+    }
+}
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
     }
 }
 
