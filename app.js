@@ -1,22 +1,24 @@
 // Chargement
 document.addEventListener('DOMContentLoaded', (event) => {
     const loadingScreen = document.getElementById('loadingScreen');
-    const loadingCanvas = document.getElementById('loadingCanvas');
+    const loadingCanvasBW = document.getElementById('loadingCanvasBW');
+    const loadingCanvasColor = document.getElementById('loadingCanvasColor');
     const loadingBar = document.getElementById('loadingBar');
     const appContent = document.getElementById('appContent');
-    const ctx = loadingCanvas.getContext('2d');
+    const ctxBW = loadingCanvasBW.getContext('2d');
+    const ctxColor = loadingCanvasColor.getContext('2d');
 
     // Charger l'image
     const img = new Image();
     img.src = 'AngrySockLoading.jpg';
     img.onload = function() {
-        // Ajuster la taille du canvas à l'image
-        loadingCanvas.width = img.width;
-        loadingCanvas.height = img.height;
+        // Ajuster la taille des canvas
+        loadingCanvasBW.width = loadingCanvasColor.width = img.width;
+        loadingCanvasBW.height = loadingCanvasColor.height = img.height;
         
         // Dessiner l'image en noir et blanc sur le canvas
-        ctx.filter = 'grayscale(100%)';
-        ctx.drawImage(img, 0, 0, img.width, img.height);
+        ctxBW.filter = 'grayscale(100%)';
+        ctxBW.drawImage(img, 0, 0, img.width, img.height);
 
         // Fonction pour simuler le chargement avec un délai
         function simulateLoading() {
@@ -29,21 +31,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         loadingScreen.style.display = 'none';
                         appContent.style.display = 'block';
                     } else {
-                        // Effacer le canvas
-                        ctx.clearRect(0, 0, loadingCanvas.width, loadingCanvas.height);
+                        // Effacer le canvas coloré
+                        ctxColor.clearRect(0, 0, loadingCanvasColor.width, loadingCanvasColor.height);
                         
-                        // Dessiner la partie en noir et blanc
-                        ctx.filter = 'grayscale(100%)';
-                        ctx.drawImage(img, 0, 0, img.width, img.height);
+                        // Calculer la hauteur à coloriser
+                        const heightToColor = (progress / 100) * img.height;
                         
                         // Dessiner la partie colorée sous la barre
-                        const heightToColor = (progress / 100) * img.height;
-                        ctx.filter = 'none';
-                        ctx.drawImage(img, 0, img.height - heightToColor, img.width, heightToColor, 0, img.height - heightToColor, img.width, heightToColor);
+                        ctxColor.drawImage(img, 0, img.height - heightToColor, img.width, heightToColor, 0, img.height - heightToColor, img.width, heightToColor);
                         
-                        // Ajuster la position de la barre de chargement pour qu'elle parte du bas et monte
-                        const translateY = -(img.height - heightToColor);
-                        loadingBar.style.transform = `translateX(-50%) translateY(${translateY}px)`;
+                        // Ajuster la position de la barre de chargement pour qu'elle parte du bas
+                        loadingBar.style.transform = `translateX(-50%) translateY(${-heightToColor}px)`;
                     }
                 }, 20); // Ajustez la vitesse de chargement ici
             }, 2000); // Délai de 2 secondes avant le début du chargement
