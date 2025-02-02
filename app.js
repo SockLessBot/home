@@ -71,4 +71,3 @@ document.addEventListener('DOMContentLoaded', (event) => {
         console.error('Un ou plusieurs éléments du DOM ne sont pas trouvés');
     }
 });
-// Suppression des parties non nécessaires pour l'instant
