@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 ctxColor.drawImage(img, 0, img.height - height, img.width, height, 0, 300 - (300 * (progress / 100)), 300, 300 * (progress / 100));
                 requestAnimationFrame(animate);
             } else {
-                window.location.href = 'nouvelle_page.html'; // Remplacez par l'URL de votre nouvelle page
+                window.location.href = 'index2.html'; // Remplacez par l'URL de votre nouvelle page
             }
         }
         animate();
