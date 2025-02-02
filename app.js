@@ -1,13 +1,35 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const bwCanvas = document.getElementById('bwCanvas');
-    const colorCanvas = document.getElementById('colorCanvas');
-    const percentageElement = document.getElementById('percentage');
-    const container = document.getElementById('loading-container');
+    function checkUsername() {
+        const usernameInput = document.getElementById('username');
+        const username = usernameInput.value.trim();
+        const correctUsername = 'Bonjour'; // Remplacez par le nom d'utilisateur correct
 
-    let img = new Image();
-    img.src = 'AngrySockLoading.jpg';
+        if (username === correctUsername) {
+            // Afficher l'animation de chargement
+            document.getElementById('username-check').style.display = 'none';
+            document.getElementById('loading-container').style.display = 'block';
+            document.getElementById('percentage').style.display = 'block';
 
-    img.onload = function() {
+            // Lancer l'animation de chargement
+            startLoadingAnimation();
+        } else {
+            // Rediriger vers une page d'attente
+            window.location.href = 'soon.html';
+        }
+    }
+
+    function startLoadingAnimation() {
+        const bwCanvas = document.getElementById('bwCanvas');
+        const colorCanvas = document.getElementById('colorCanvas');
+        const percentageElement = document.getElementById('percentage');
+        
+        const ctxBW = bwCanvas.getContext('2d');
+        const ctxColor = colorCanvas.getContext('2d');
+
+        let img = new Image();
+        img.src = 'AngrySockLoading.jpg';
+
+        img.onload = function() {
         // Calculer la taille de l'image en fonction du conteneur tout en gardant l'aspect ratio
         const maxWidth = container.clientWidth;
         const maxHeight = container.clientHeight;
@@ -40,20 +62,27 @@ document.addEventListener('DOMContentLoaded', function() {
         ctxBW.putImageData(imgData, 0, 0);
 
         let progress = 0;
-        function animate() {
-            if (progress < 100) {
-                progress += 1;
-                percentageElement.textContent = `${progress}%`;
-                
-                ctxColor.clearRect(0, 0, colorCanvas.width, colorCanvas.height);
-                
-                const height = img.height * (progress / 100) * scale;
-                ctxColor.drawImage(img, 0, img.height - height / scale, img.width, height / scale, 0, colorCanvas.height - height, colorCanvas.width, height);
-                requestAnimationFrame(animate);
-            } else {
-                window.location.href = 'index2.html';
+            function animate() {
+                if (progress < 100) {
+                    progress += 1;
+                    percentageElement.textContent = `${progress}%`;
+                    
+                    // Animation de l'image de chargement
+                    // ...
+
+                    requestAnimationFrame(animate);
+                } else {
+                    // Redirection à la fin de l'animation
+                    window.location.href = 'index2.html';
+                }
             }
-        }
-        animate();
-    };
+            animate();
+        };
+    }
+
+// Ajout d'un écouteur d'événement pour le bouton de vérification
+    document.getElementById('username-check').addEventListener('submit', function(e) {
+        e.preventDefault();
+        checkUsername();
+    });
 });
