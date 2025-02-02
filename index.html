@@ -19,11 +19,19 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             z-index: 1000;
         }
         #loadingImage {
             width: 200px;
             height: auto;
+            margin-bottom: 20px;
+        }
+        #loadingBar {
+            width: 2px;
+            height: 0;
+            background-color: #000;
+            transition: height 0.2s ease-out;
         }
         #appContent {
             display: none;
@@ -32,7 +40,8 @@
 </head>
 <body>
     <div id="loadingScreen">
-        <img id="loadingImage" src="AngrySockLoading.jpg" alt="Chargement en cours">
+        <img id="loadingImage" src="AngrySockLoading.png" alt="Chargement en cours">
+        <div id="loadingBar"></div>
     </div>
     <div id="appContent">
         <!-- Contenu de la page d'accueil ici -->
