@@ -3,52 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SocklessBot Mini App</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #f0f0f0;
-        }
-        #loadingScreen {
-            position: relative;
-            text-align: center;
-            z-index: 1000;
-        }
-        #loadingCanvasBW, #loadingCanvasColor {
-            position: absolute;
-            width: 200px;
-            height: auto;
-        }
-        #percentage {
-            position: absolute;
-            bottom: -30px; /* Ajustez cette valeur pour positionner le pourcentage sous l'image */
-            width: 200px;
-            text-align: center;
-            font-size: 16px;
-            font-family: Arial, sans-serif;
-        }
-        #appContent {
-            display: none;
-        }
-    </style>
+    <title>Chargement de SocklessBot</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="appContent">
-    <p>Contenu de la page d'accueil</p>
-    </div>
-    <div id="loadingScreen">
-        <canvas id="loadingCanvasBW"></canvas>
-        <canvas id="loadingCanvasColor"></canvas>
+    <div id="loading-screen">
+        <canvas id="bwCanvas" width="300" height="300"></canvas>
+        <canvas id="colorCanvas" width="300" height="300"></canvas>
         <div id="percentage">0%</div>
-    </div>
-    <div id="appContent">
-        <!-- Contenu de la page d'accueil ici -->
     </div>
     <script src="app.js"></script>
 </body>
