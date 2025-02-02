@@ -9,12 +9,16 @@
 </head>
 <body>
     <div id="loading-screen">
-        <div id="loading-container">
+        <div id="username-check">
+            <input type="text" id="username" placeholder="Entrez votre nom d'utilisateur">
+            <button onclick="checkUsername()">Vérifier</button>
+        </div>
+        <div id="loading-container" style="display: none;">
             <canvas id="bwCanvas" width="300" height="300"></canvas>
             <canvas id="colorCanvas" width="300" height="300"></canvas>
         </div>
-        <div id="percentage">0%</div>
-    </div>
+        <div id="percentage" style="display: none;">0%</div>
+    </body>
     <script src="app.js"></script>
 </body>
 </html>
