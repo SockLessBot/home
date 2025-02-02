@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         ctx.filter = 'none';
                         ctx.drawImage(img, 0, img.height - heightToColor, img.width, heightToColor, 0, img.height - heightToColor, img.width, heightToColor);
                         
-                        // Ajuster la position de la barre de chargement
+                        // Ajuster la position de la barre de chargement pour qu'elle parte du bas
                         const translateY = heightToColor - img.height;
                         loadingBar.style.transform = `translateX(-50%) translateY(${translateY}px)`;
                     }
