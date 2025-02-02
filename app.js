@@ -11,7 +11,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Calculer la taille de l'image en fonction du conteneur tout en gardant l'aspect ratio
         const maxWidth = container.clientWidth;
         const maxHeight = container.clientHeight;
-        const scale = Math.min(maxWidth / img.width, maxHeight / img.height);
+        let scale = Math.min(maxWidth / img.width, maxHeight / img.height);
+        
+        // Assurez-vous que l'image n'est pas trop petite
+        if (scale * img.width < 300 || scale * img.height < 300) {
+            scale = Math.max(300 / img.width, 300 / img.height);
+        }
         
         bwCanvas.width = img.width * scale;
         bwCanvas.height = img.height * scale;
