@@ -1,42 +1,26 @@
-body {
-    font-family: Arial, sans-serif;
+body, html {
+    margin: 0;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
     background-color: #f0f0f0;
 }
 
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
+#loading-screen {
+    position: relative;
 }
 
-#game {
-    width: 800px;
-    height: 600px;
-    border: 1px solid black;
-}
-
-#loadingScreen {
-    border: 1px solid red;
-    width: 200px; /* Assurez-vous qu'il a une largeur */
-    height: auto; /* Ou une hauteur fixe si nécessaire */
-}
-
-#loadingCanvasBW, #loadingCanvasColor {
-    border: 1px solid blue;
-    background-color: rgba(255, 0, 0, 0.5); /* Couleur de fond rouge semi-transparente pour le débogage */
+canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 #percentage {
-    border: 1px solid green; /* Pour vérifier si le pourcentage est bien là */
+    position: absolute;
+    bottom: -50px;
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
 }
