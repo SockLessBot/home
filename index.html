@@ -20,7 +20,8 @@
             text-align: center;
             z-index: 1000;
         }
-        #loadingCanvas {
+        #loadingCanvasBW, #loadingCanvasColor {
+            position: absolute;
             width: 200px;
             height: auto;
         }
@@ -41,7 +42,8 @@
 </head>
 <body>
     <div id="loadingScreen">
-        <canvas id="loadingCanvas"></canvas>
+        <canvas id="loadingCanvasBW"></canvas>
+        <canvas id="loadingCanvasColor"></canvas>
         <div id="loadingBar"></div>
     </div>
     <div id="appContent">
