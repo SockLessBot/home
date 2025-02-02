@@ -15,13 +15,13 @@ body, html {
 }
 
 #loading-screen {
-    text-align: center; /* Centre le contenu */
+    text-align: center;
     width: 100%;
     max-width: 800px;
-    display: flex; /* Utiliser flexbox pour centrer verticalement */
-    flex-direction: column; /* Assure que les éléments sont empilés verticalement */
-    align-items: center; /* Centre les éléments horizontalement */
-    justify-content: center; /* Centre les éléments verticalement */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 #loading-container {
@@ -32,6 +32,7 @@ body, html {
     display: inline-block;
     border-radius: 15px;
     overflow: hidden;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5), 0px 6px 6px rgba(0, 0, 0, 0.25); /* Ajout d'une ombre */
 }
 
 canvas {
@@ -43,7 +44,7 @@ canvas {
 }
 
 #percentage {
-    margin-top: 20px; /* Espace entre l'image et le texte */
+    margin-top: 20px;
     font-size: 24px;
     font-family: 'Arial', sans-serif;
     color: #FFD700;
