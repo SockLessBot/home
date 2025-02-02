@@ -15,12 +15,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 loadingScreen.style.display = 'none';
                 appContent.style.display = 'block';
             } else {
-                // Change la saturation de l'image en fonction du progrès
-                loadingImage.style.filter = `saturate(${progress}%)`;
-                
                 // Ajuste la hauteur de la barre de chargement
-                const barHeight = (progress / 100) * window.innerHeight;
-                loadingBar.style.height = `${barHeight}px`;
+                const scaleY = progress / 100;
+                loadingBar.style.transform = `scaleY(${scaleY})`;
+                
+                // Change la saturation de l'image en fonction du progrès
+                // On applique un masque pour que seulement la partie sous la barre soit colorée
+                const saturation = Math.min(progress, 100);
+                loadingImage.style.filter = `saturate(${saturation}%)`;
             }
         }, 20); // Ajustez la vitesse de chargement ici
     }
