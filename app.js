@@ -1,35 +1,56 @@
 // Chargement
 document.addEventListener('DOMContentLoaded', (event) => {
     const loadingScreen = document.getElementById('loadingScreen');
-    const loadingImage = document.getElementById('loadingImage');
+    const loadingCanvas = document.getElementById('loadingCanvas');
     const loadingBar = document.getElementById('loadingBar');
     const appContent = document.getElementById('appContent');
+    const ctx = loadingCanvas.getContext('2d');
 
-    // Fonction pour simuler le chargement avec un délai
-    function simulateLoading() {
-        setTimeout(() => {
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += 1;
-                if (progress > 100) {
-                    clearInterval(interval);
-                    loadingScreen.style.display = 'none';
-                    appContent.style.display = 'block';
-                } else {
-                    // Ajuste la position de la barre de chargement
-                    const translateY = (progress / 100) * loadingImage.height;
-                    loadingBar.style.transform = `translateX(-50%) translateY(${translateY}px)`;
-                    
-                    // Change la saturation de l'image en dessous de la barre
-                    // Note: Ceci est une simulation visuelle car on ne peut pas directement masquer une partie de l'image avec CSS
-                    const saturation = Math.min(progress, 100);
-                    loadingImage.style.filter = `saturate(${saturation}%)`;
-                }
-            }, 20); // Ajustez la vitesse de chargement ici
-        }, 2000); // Délai de 2 secondes avant le début du chargement
-    }
+    // Charger l'image
+    const img = new Image();
+    img.src = 'AngrySockLoading.jpg';
+    img.onload = function() {
+        // Ajuster la taille du canvas à l'image
+        loadingCanvas.width = img.width;
+        loadingCanvas.height = img.height;
+        
+        // Dessiner l'image en noir et blanc sur le canvas
+        ctx.filter = 'grayscale(100%)';
+        ctx.drawImage(img, 0, 0, img.width, img.height);
 
-    simulateLoading();
+        // Fonction pour simuler le chargement avec un délai
+        function simulateLoading() {
+            setTimeout(() => {
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 1;
+                    if (progress > 100) {
+                        clearInterval(interval);
+                        loadingScreen.style.display = 'none';
+                        appContent.style.display = 'block';
+                    } else {
+                        // Effacer le canvas
+                        ctx.clearRect(0, 0, loadingCanvas.width, loadingCanvas.height);
+                        
+                        // Dessiner la partie en noir et blanc
+                        ctx.filter = 'grayscale(100%)';
+                        ctx.drawImage(img, 0, 0, img.width, img.height);
+                        
+                        // Dessiner la partie colorée sous la barre
+                        const heightToColor = (progress / 100) * img.height;
+                        ctx.filter = 'none';
+                        ctx.drawImage(img, 0, img.height - heightToColor, img.width, heightToColor, 0, img.height - heightToColor, img.width, heightToColor);
+                        
+                        // Ajuster la position de la barre de chargement
+                        const translateY = heightToColor - img.height;
+                        loadingBar.style.transform = `translateX(-50%) translateY(${translateY}px)`;
+                    }
+                }, 20); // Ajustez la vitesse de chargement ici
+            }, 2000); // Délai de 2 secondes avant le début du chargement
+        }
+
+        simulateLoading();
+    };
 });
 
 
