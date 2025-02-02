@@ -15,15 +15,19 @@ body, html {
 }
 
 #loading-screen {
-    text-align: center;
+    text-align: center; /* Centre le contenu */
     width: 100%;
-    max-width: 800px; /* Augmentez la taille maximale pour donner plus d'espace à l'image */
+    max-width: 800px;
+    display: flex; /* Utiliser flexbox pour centrer verticalement */
+    flex-direction: column; /* Assure que les éléments sont empilés verticalement */
+    align-items: center; /* Centre les éléments horizontalement */
+    justify-content: center; /* Centre les éléments verticalement */
 }
 
 #loading-container {
     position: relative;
-    width: 100%; /* Assurez-vous qu'il prend toute la largeur disponible */
-    max-width: 400px; /* Gardons cette taille pour l'image de chargement */
+    width: 100%;
+    max-width: 400px;
     aspect-ratio: 1 / 1;
     display: inline-block;
     border-radius: 15px;
@@ -39,18 +43,17 @@ canvas {
 }
 
 #percentage {
-    margin-top: 20px;
+    margin-top: 20px; /* Espace entre l'image et le texte */
     font-size: 24px;
     font-family: 'Arial', sans-serif;
-    color: #FFD700; /* Couleur dorée pour un contraste élevé avec le fond prune */
+    color: #FFD700;
     font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Ombre pour le faire ressortir sur la texture */
-    animation: pulse 2s infinite;
-    background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent pour améliorer la lisibilité */
-    padding: 10px 20px; /* Espace autour du texte */
-    border-radius: 10px; /* Coins arrondis */
-    display: inline-block; /* Pour que le fond ne prenne que la largeur du texte */
-    animation: pulse 2s infinite, float 3s infinite; /* Ajoute l'animation de flottement */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    animation: pulse 2s infinite, float 3s infinite;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: inline-block;
 }
 
 @keyframes pulse {
