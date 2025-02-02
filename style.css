@@ -31,7 +31,8 @@ button {
 }
 
 #loadingCanvasBW, #loadingCanvasColor {
-    border: 1px solid blue; /* Pour vérifier si les canvas sont bien là */
+    border: 1px solid blue;
+    background-color: rgba(255, 0, 0, 0.5); /* Couleur de fond rouge semi-transparente pour le débogage */
 }
 
 #percentage {
