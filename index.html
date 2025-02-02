@@ -10,28 +10,31 @@
             padding: 0;
             height: 100%;
             overflow: hidden;
-        }
-        #loadingScreen {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: #f0f0f0;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
+            background: #f0f0f0;
+        }
+        #loadingScreen {
+            position: relative;
+            text-align: center;
             z-index: 1000;
         }
         #loadingImage {
             width: 200px;
             height: auto;
-            margin-bottom: 20px;
+            filter: saturate(0%);
         }
         #loadingBar {
-            width: 2px;
-            height: 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200px;
+            height: 2px;
             background-color: #000;
-            transition: height 0.2s ease-out;
+            transform-origin: bottom;
+            transform: scaleY(0);
+            transition: transform 0.2s ease-out;
         }
         #appContent {
             display: none;
@@ -40,7 +43,7 @@
 </head>
 <body>
     <div id="loadingScreen">
-        <img id="loadingImage" src="AngrySockLoading.jpg" alt="Chargement en cours">
+        <img id="loadingImage" src="AngrySockLoading.png" alt="Chargement en cours">
         <div id="loadingBar"></div>
     </div>
     <div id="appContent">
