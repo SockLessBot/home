@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const loadingScreen = document.getElementById('loadingScreen');
     const loadingCanvasBW = document.getElementById('loadingCanvasBW');
     const loadingCanvasColor = document.getElementById('loadingCanvasColor');
-    const loadingBar = document.getElementById('loadingBar');
+    const percentage = document.getElementById('percentage');
     const appContent = document.getElementById('appContent');
     const ctxBW = loadingCanvasBW.getContext('2d');
     const ctxColor = loadingCanvasColor.getContext('2d');
@@ -40,8 +40,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         // Dessiner la partie colorée sous la barre
                         ctxColor.drawImage(img, 0, img.height - heightToColor, img.width, heightToColor, 0, img.height - heightToColor, img.width, heightToColor);
                         
-                        // Ajuster la position de la barre de chargement pour qu'elle parte du bas
-                        loadingBar.style.transform = `translateX(-50%) translateY(${-heightToColor}px)`;
+                        // Mise à jour du pourcentage
+                        percentage.textContent = `${progress}%`;
                     }
                 }, 20); // Ajustez la vitesse de chargement ici
             }, 2000); // Délai de 2 secondes avant le début du chargement
@@ -50,6 +50,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         simulateLoading();
     };
 });
+
+
 
 
 document.addEventListener('DOMContentLoaded', (event) => {
