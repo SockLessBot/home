@@ -30,29 +30,33 @@
     <div id="userInfo"></div>
     <img id="userAvatar" src="" alt="Avatar de l'utilisateur">
     <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            if (window.Telegram.WebApp) {
-                window.Telegram.WebApp.ready();
+    document.addEventListener('DOMContentLoaded', (event) => {
+        if (window.Telegram.WebApp) {
+            window.Telegram.WebApp.ready();
+            
+            // Récupérer les infos de l'utilisateur
+            let user = window.Telegram.WebApp.initDataUnsafe.user;
+            console.log('Données utilisateur:', user); // Ajout pour le débogage
+            if (user) {
+                // Affichage du pseudo
+                document.getElementById('userInfo').textContent = `Pseudo: @${user.username || user.first_name}`;
                 
-                // Récupérer les infos de l'utilisateur
-                let user = window.Telegram.WebApp.initDataUnsafe.user;
-                if (user) {
-                    // Affichage du pseudo
-                    document.getElementById('userInfo').textContent = `Pseudo: @${user.username || user.first_name}`;
-                    
-                    // Affichage de l'avatar si disponible
-                    if (user.photo_url) {
-                        document.getElementById('userAvatar').src = user.photo_url;
-                    } else {
-                        document.getElementById('userAvatar').src = 'default_avatar.jpg'; // Chemin vers une image par défaut si l'utilisateur n'a pas d'avatar
-                    }
+                // Affichage de l'avatar si disponible
+                if (user.photo_url) {
+                    document.getElementById('userAvatar').src = user.photo_url;
                 } else {
-                    document.getElementById('userInfo').textContent = 'Aucune information utilisateur disponible.';
+                    console.log('Aucun avatar disponible, utilisation de l\'avatar par défaut');
+                    document.getElementById('userAvatar').src = 'default_avatar.jpg'; // Chemin vers une image par défaut si l'utilisateur n'a pas d'avatar
                 }
             } else {
-                alert("Cette page est conçue pour être ouverte via Telegram.");
+                console.log('Aucune donnée utilisateur reçue');
+                document.getElementById('userInfo').textContent = 'Aucune information utilisateur disponible.';
             }
-        });
-    </script>
+        } else {
+            console.log('L\'API Telegram Web App n\'est pas disponible');
+            alert("Cette page est conçue pour être ouverte via Telegram.");
+        }
+    });
+</script>
 </body>
 </html>
