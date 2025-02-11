@@ -15,13 +15,12 @@ document.addEventListener("DOMContentLoaded", function() {
             userAvatar.src = user.photo_url;
             userName.textContent = user.username || 'Utilisateur';
         } else {
-            alert("Veuillez accéder à cette page depuis Telegram.");
-            window.location.href = "https://t.me/YourBotUsername";
+            console.error("L'utilisateur n'est pas connecté via Telegram.");
         }
     }, 2000); // Temps de chargement simulé
 });
 
 function navigateTo(page) {
-    alert(`Naviguer vers la page : ${page}`);
+    console.log(`Naviguer vers la page : ${page}`);
     // Ajoutez ici la logique de navigation vers les différentes pages
 }
