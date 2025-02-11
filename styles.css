@@ -29,12 +29,16 @@ body, html {
 
 .home-screen {
     text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .user-info {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    justify-content: flex-start;
 }
 
 .user-info img {
@@ -47,9 +51,12 @@ body, html {
 .nav-icons {
     display: flex;
     justify-content: space-around;
-    position: absolute;
+    position: fixed;
     bottom: 20px;
     width: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px 0;
+    border-top: 1px solid #ccc;
 }
 
 .nav-icon {
@@ -60,4 +67,15 @@ body, html {
 
 .nav-icon.active {
     opacity: 1;
+}
+
+@media (max-width: 600px) {
+    .user-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .user-info img {
+        margin-bottom: 10px;
+    }
 }
