@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const username = getParameterByName('username');
-    const correctUsername = 'sbst_b'; // Votre nom d'utilisateur Telegram
 
     // Lancer l'animation de chargement pour tous
     startLoadingAnimation();
@@ -73,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     // Attendre au moins 4 secondes avant de rediriger
                     setTimeout(function() {
-                        // Rediriger vers index2.html sans vérifier le nom d'utilisateur
+                        // Rediriger vers index2.html sans condition
                         window.location.href = 'index2.html';
                     }, Math.max(0, 4000 - elapsedTime));
                 }
