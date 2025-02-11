@@ -73,12 +73,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     // Attendre au moins 4 secondes avant de rediriger
                     setTimeout(function() {
-                        // Vérifier le nom d'utilisateur et rediriger
-                        if (username === correctUsername) {
-                            window.location.href = 'index2.html';
-                        } else {
-                            window.location.href = 'soon.html';
-                        }
+                        // Rediriger vers index2.html sans vérifier le nom d'utilisateur
+                        window.location.href = 'index2.html';
                     }, Math.max(0, 4000 - elapsedTime));
                 }
             }
