@@ -1,1 +1,58 @@
-
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocklessBot User Detection</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #userInfo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #userAvatar {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div id="userInfo"></div>
+    <img id="userAvatar" src="" alt="Avatar de l'utilisateur">
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            if (window.Telegram.WebApp) {
+                window.Telegram.WebApp.ready();
+                
+                // Récupérer les infos de l'utilisateur
+                let user = window.Telegram.WebApp.initDataUnsafe.user;
+                if (user) {
+                    // Affichage du pseudo
+                    document.getElementById('userInfo').textContent = `Pseudo: @${user.username || user.first_name}`;
+                    
+                    // Affichage de l'avatar si disponible
+                    if (user.photo_url) {
+                        document.getElementById('userAvatar').src = user.photo_url;
+                    } else {
+                        document.getElementById('userAvatar').src = 'default_avatar.jpg'; // Chemin vers une image par défaut si l'utilisateur n'a pas d'avatar
+                    }
+                } else {
+                    document.getElementById('userInfo').textContent = 'Aucune information utilisateur disponible.';
+                }
+            } else {
+                alert("Cette page est conçue pour être ouverte via Telegram.");
+            }
+        });
+    </script>
+</body>
+</html>
