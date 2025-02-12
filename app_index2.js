@@ -2,14 +2,15 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log("Chargement de app_index2.js après le DOM");
 
     const firebaseConfig = {
-        apiKey: "AIzaSyAG6168t9L96Wz8MTj195blr7LJA1dtZEI",
-        authDomain: "socklessbot-52f51.firebaseapp.com",
-        projectId: "socklessbot-52f51",
-        storageBucket: "socklessbot-52f51.firebasestorage.app",
-        messagingSenderId: "888488399692",
-        appId: "1:888488399692:web:7d7d7e9f82eadc117ef5e9",
-        measurementId: "G-5G1BJ3L3DS"
-    };
+    apiKey: "AIzaSyAG6168t9L96Wz8MTj195blr7LJA1dtZEI",
+    authDomain: "socklessbot-52f51.firebaseapp.com",
+    databaseURL: "https://socklessbot-52f51-default-rtdb.europe-west1.firebasedatabase.app", // URL mise à jour
+    projectId: "socklessbot-52f51",
+    storageBucket: "socklessbot-52f51.firebasestorage.app",
+    messagingSenderId: "888488399692",
+    appId: "1:888488399692:web:7d7d7e9f82eadc117ef5e9",
+    measurementId: "G-5G1BJ3L3DS"
+};
 
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
