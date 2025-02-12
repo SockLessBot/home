@@ -5,15 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="app_index2.js"></script>
-    <title>SocklessBot User Detection</title> 
+    <title>SocklessBot User Detection</title>
     <link rel="stylesheet" href="style_index2.css">
 </head>
 <body>
-    <h1 id="username">Chargement...</h1>
-    <img id="avatar" src="default_avatar.png" alt="Avatar" width="100">
-    
-    <div class="sock-container">
-        <img id="sock" src="SockLessBumpSock.png" alt="Chaussette Machiavélique" class="sock">
+    <div class="header">
+        <div class="avatar">
+            <img id="avatar" src="default_avatar.png" alt="Avatar" width="40">
+            <span id="username">Chargement...</span>
+        </div>
+        <button class="upgrade-button" onclick="location.href='autre_page.html'">Autre Page</button>
+    </div>
+
+    <div class="center">
+        <div class="sock-container">
+            <img id="sock" src="SockLessBumpSock.png" alt="Chaussette Machiavélique" class="sock">
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="menu">
+            <a href="#">Accueil</a>
+            <a href="#">Tâches</a>
+            <a href="#">Amis</a>
+            <a href="#">Activité</a>
+            <a href="#">Gagner</a>
+            <a href="#">Portefeuille</a>
+        </div>
     </div>
 </body>
 </html>
