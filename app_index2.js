@@ -59,4 +59,49 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.reload();
         });
     }
+
+    // Enregistrer le temps de connexion et le nombre de connexions
+    let connectionCount = localStorage.getItem('connectionCount') || 0;
+    connectionCount = parseInt(connectionCount) + 1;
+    localStorage.setItem('connectionCount', connectionCount);
+    localStorage.setItem('lastConnectionTime', new Date().toISOString());
+
+    // Enregistrer le nombre de tapotements
+    let tapCount = localStorage.getItem('tapCount') || 0;
+    const sockElement = document.getElementById("sock");
+
+    sockElement.addEventListener('click', function () {
+        tapCount = parseInt(tapCount) + 1;
+        localStorage.setItem('tapCount', tapCount);
+        sockElement.classList.add('clicked');
+        setTimeout(() => sockElement.classList.remove('clicked'), 500);
+    });
+
+    // Envoyer les données au serveur
+    function sendDataToServer() {
+        const data = {
+            username: username,
+            lastConnectionTime: localStorage.getItem('lastConnectionTime'),
+            connectionCount: connectionCount,
+            tapCount: tapCount
+        };
+
+        fetch('https://votre-serveur.com/endpoint', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Données envoyées avec succès:', data);
+        })
+        .catch((error) => {
+            console.error('Erreur lors de l\'envoi des données:', error);
+        });
+    }
+
+    // Envoyer les données au chargement de la page
+    sendDataToServer();
 });
