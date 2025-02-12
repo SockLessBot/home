@@ -1,17 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
     console.log("Chargement de app_index2.js après le DOM");
 
-   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAG6168t9L96Wz8MTj195blr7LJA1dtZEI",
-  authDomain: "socklessbot-52f51.firebaseapp.com",
-  projectId: "socklessbot-52f51",
-  storageBucket: "socklessbot-52f51.firebasestorage.app",
-  messagingSenderId: "888488399692",
-  appId: "1:888488399692:web:7d7d7e9f82eadc117ef5e9",
-  measurementId: "G-5G1BJ3L3DS"
-};
+    const firebaseConfig = {
+        apiKey: "AIzaSyAG6168t9L96Wz8MTj195blr7LJA1dtZEI",
+        authDomain: "socklessbot-52f51.firebaseapp.com",
+        projectId: "socklessbot-52f51",
+        storageBucket: "socklessbot-52f51.firebasestorage.app",
+        messagingSenderId: "888488399692",
+        appId: "1:888488399692:web:7d7d7e9f82eadc117ef5e9",
+        measurementId: "G-5G1BJ3L3DS"
+    };
 
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
@@ -88,12 +86,25 @@ const firebaseConfig = {
     // Enregistrer le nombre de tapotements
     let tapCount = localStorage.getItem('tapCount') || 0;
     const sockElement = document.getElementById("sock");
+    const tapCountDisplay = document.getElementById('tapCountDisplay');
+
+    if (tapCountDisplay) {
+        tapCountDisplay.textContent = tapCount;
+    }
 
     sockElement.addEventListener('click', function () {
         tapCount = parseInt(tapCount) + 1;
         localStorage.setItem('tapCount', tapCount);
         sockElement.classList.add('clicked');
         setTimeout(() => sockElement.classList.remove('clicked'), 500);
+
+        // Mettre à jour l'affichage du nombre de tapotements
+        if (tapCountDisplay) {
+            tapCountDisplay.textContent = tapCount;
+        }
+
+        // Mettre à jour les données dans Firebase
+        sendDataToServer();
     });
 
     // Envoyer les données au serveur
@@ -105,19 +116,13 @@ const firebaseConfig = {
             tapCount: tapCount
         };
 
-        fetch('https://votre-serveur.com/endpoint', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Données envoyées avec succès:', data);
-        })
-        .catch((error) => {
-            console.error('Erreur lors de l\'envoi des données:', error);
+        // Envoi des données à Firebase Realtime Database
+        database.ref('users/' + username).set(data, (error) => {
+            if (error) {
+                console.error('Erreur lors de l\'envoi des données:', error);
+            } else {
+                console.log('Données envoyées avec succès à Firebase');
+            }
         });
     }
 
