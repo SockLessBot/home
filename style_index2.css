@@ -2,10 +2,53 @@ body {
     margin: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     height: 100vh;
     background: url('SockLessBumpJeans.jpg') center/cover no-repeat;
+    font-family: Arial, sans-serif;
+}
+
+.header, .footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f8f9fa;
+}
+
+.header .avatar {
+    display: flex;
+    align-items: center;
+}
+
+.header .avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.header .username {
+    font-size: 18px;
+}
+
+.header .upgrade-button {
+    margin-left: auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .sock-container {
@@ -34,4 +77,16 @@ body {
     0% { transform: rotate(0deg); }
     50% { transform: rotate(10deg); }
     100% { transform: rotate(0deg); }
+}
+
+.footer .menu {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.footer .menu a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
 }
