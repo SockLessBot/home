@@ -1,35 +1,37 @@
 body {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: url('jeans-texture.jpg') center/cover no-repeat;
-        }
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('SockLessBumpJeans.jpg') center/cover no-repeat;
+}
 
-        .sock-container {
-            position: relative;
-            cursor: pointer;
-        }
+.sock-container {
+    position: relative;
+    cursor: pointer;
+    margin-top: 20px;
+}
 
-        .sock {
-            width: 200px;
-            transition: transform 0.2s ease-in-out;
-        }
+.sock {
+    width: 200px;
+    transition: transform 0.2s ease-in-out;
+}
 
-        .sock.clicked {
-            animation: bounce 0.5s ease, rotate 0.5s ease;
-        }
+.sock.clicked {
+    animation: bounce 0.5s ease, rotate 0.5s ease;
+}
 
-        @keyframes bounce {
-            0% { transform: translateY(0) scaleY(1); }
-            30% { transform: translateY(-10px) scaleY(0.9); }
-            60% { transform: translateY(0) scaleY(1); }
-            100% { transform: translateY(0); }
-        }
+@keyframes bounce {
+    0% { transform: translateY(0) scaleY(1); }
+    30% { transform: translateY(-10px) scaleY(0.9); }
+    60% { transform: translateY(0) scaleY(1); }
+    100% { transform: translateY(0); }
+}
 
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            50% { transform: rotate(5deg); }
-            100% { transform: rotate(0deg); }
-        }
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(10deg); }
+    100% { transform: rotate(0deg); }
+}
