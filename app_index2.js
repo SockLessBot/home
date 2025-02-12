@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Vérification que les éléments existent bien avant de les modifier
     const usernameElement = document.getElementById("username");
     const avatarElement = document.getElementById("avatar");
+    const welcomeMessageElement = document.getElementById("welcomeMessage");
 
     if (usernameElement) {
         usernameElement.textContent = `👤 ${username}`;
@@ -32,7 +33,30 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error("Élément avatar introuvable.");
     }
 
+    if (welcomeMessageElement) {
+        const currentHour = new Date().getHours();
+        let greeting;
+        if (currentHour < 12) {
+            greeting = "Bonjour";
+        } else if (currentHour < 18) {
+            greeting = "Bon après-midi";
+        } else {
+            greeting = "Bonsoir";
+        }
+        welcomeMessageElement.textContent = `${greeting}, ${username}!`;
+    }
+
     // Sauvegarde dans sessionStorage pour éviter la perte après navigation
     sessionStorage.setItem('username', username);
     sessionStorage.setItem('avatar', avatar);
+
+    // Ajout d'un bouton de déconnexion
+    const logoutButton = document.getElementById("logoutButton");
+    if (logoutButton) {
+        logoutButton.addEventListener('click', function () {
+            sessionStorage.removeItem('username');
+            sessionStorage.removeItem('avatar');
+            window.location.reload();
+        });
+    }
 });
