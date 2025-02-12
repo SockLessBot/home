@@ -1,29 +1,25 @@
 document.addEventListener('DOMContentLoaded', function () {
-    function getParameterByName(name, url = window.location.href) {
-        name = name.replace(/[\[\]]/g, '\\$&');
-        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, ' '));
-    }
+    console.log("Chargement de app_index1.js");
 
-    const username = getParameterByName('username');
-    const avatar = getParameterByName('avatar');
+    let tg = window.Telegram.WebApp;
+    tg.expand(); // Mettre l'app en plein écran
 
-    console.log("Username récupéré :", username);
-    console.log("Avatar récupéré :", avatar);
+    // Récupérer les infos de l'utilisateur Telegram
+    let username = tg.initDataUnsafe.user?.username || "Invité";
+    let avatar = tg.initDataUnsafe.user?.photo_url || "default_avatar.png";
 
-    // Lancer l'animation de chargement
+    console.log("Utilisateur détecté :", username);
+    console.log("Avatar détecté :", avatar);
+
     startLoadingAnimation();
 
     function startLoadingAnimation() {
         const bwCanvas = document.getElementById('bwCanvas');
         const colorCanvas = document.getElementById('colorCanvas');
         const percentageElement = document.getElementById('percentage');
-        
+
         if (!bwCanvas || !colorCanvas || !percentageElement) {
-            console.error("Les éléments canvas ou pourcentage sont introuvables.");
+            console.error("Les éléments canvas sont introuvables.");
             return;
         }
 
@@ -34,23 +30,15 @@ document.addEventListener('DOMContentLoaded', function () {
         img.src = 'AngrySockLoading.jpg';
 
         img.onload = function () {
-            const maxWidth = bwCanvas.clientWidth;
-            const maxHeight = bwCanvas.clientHeight;
-            let scale = Math.min(maxWidth / img.width, maxHeight / img.height);
-            
-            const minSize = 400;
-            if (scale * img.width < minSize || scale * img.height < minSize) {
-                scale = Math.max(minSize / img.width, minSize / img.height);
-            }
-            
-            bwCanvas.width = img.width * scale;
-            bwCanvas.height = img.height * scale;
-            colorCanvas.width = img.width * scale;
-            colorCanvas.height = img.height * scale;
+            bwCanvas.width = img.width;
+            bwCanvas.height = img.height;
+            colorCanvas.width = img.width;
+            colorCanvas.height = img.height;
 
             ctxBW.drawImage(img, 0, 0, bwCanvas.width, bwCanvas.height);
             let imgData = ctxBW.getImageData(0, 0, bwCanvas.width, bwCanvas.height);
             let data = imgData.data;
+
             for (let i = 0; i < data.length; i += 4) {
                 let avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
                 data[i] = avg;
@@ -66,18 +54,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (progress < 100) {
                     progress += 1;
                     percentageElement.textContent = `${progress}%`;
-                    
+
                     ctxColor.clearRect(0, 0, colorCanvas.width, colorCanvas.height);
-                    
-                    const height = img.height * (progress / 100) * scale;
-                    ctxColor.drawImage(img, 0, img.height - height / scale, img.width, height / scale, 0, colorCanvas.height - height, colorCanvas.width, height);
+                    const height = img.height * (progress / 100);
+                    ctxColor.drawImage(img, 0, img.height - height, img.width, height, 0, colorCanvas.height - height, colorCanvas.width, height);
+
                     requestAnimationFrame(animate);
                 } else {
-                    const endTime = Date.now();
-                    const elapsedTime = endTime - startTime;
-                    
+                    const elapsedTime = Date.now() - startTime;
                     setTimeout(function () {
-                        let redirectUrl = `index2.html?username=${encodeURIComponent(username || 'Invité')}&avatar=${encodeURIComponent(avatar || 'default_avatar.png')}`;
+                        let redirectUrl = `index2.html?username=${encodeURIComponent(username)}&avatar=${encodeURIComponent(avatar)}`;
                         window.location.href = redirectUrl;
                     }, Math.max(0, 4000 - elapsedTime));
                 }
