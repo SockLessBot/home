@@ -91,7 +91,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     async function handleTelegramAuth() {
-        const telegramUserId = telegramUsername; // Utilisez un identifiant unique pour Telegram
         let attempts = 0;
         const maxAttempts = 3;
 
@@ -100,22 +99,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 const user = auth.currentUser;
                 if (user) {
                     console.log("Utilisateur authentifié:", user.uid);
+                    sendDataToServer();
+                    return;
                 } else {
                     console.log("Aucun utilisateur authentifié, tentative de connexion...");
                 }
 
-                const snapshot = await database.ref('users/' + telegramUserId).once('value');
+                // Vérifiez si l'utilisateur existe déjà dans Firebase
+                const snapshot = await database.ref('users/' + telegramUsername).once('value');
                 if (snapshot.exists()) {
                     // L'utilisateur existe, connectez-le
                     console.log("Utilisateur existant, connexion en cours...");
-                    await auth.signInWithCustomToken(telegramUserId);
+                    await auth.signInWithEmailAndPassword(telegramUsername + "@telegram.com", "defaultpassword");
                     console.log("Utilisateur connecté avec succès");
                     sendDataToServer();
                     return;
                 } else {
                     // L'utilisateur n'existe pas, créez-le
                     console.log("Nouvel utilisateur, création en cours...");
-                    await auth.createUserWithEmailAndPassword(telegramUserId + "@telegram.com", "defaultpassword");
+                    await auth.createUserWithEmailAndPassword(telegramUsername + "@telegram.com", "defaultpassword");
                     console.log("Utilisateur créé avec succès");
                     sendDataToServer();
                     return;
