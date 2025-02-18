@@ -1,24 +1,22 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js";
+import { getDatabase, ref, once, set, update } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyC4QIw5_DPLV1jgWXD_6cwCcSJ45beVJPs",
+    authDomain: "socklessbot-4cb16.firebaseapp.com",
+    projectId: "socklessbot-4cb16",
+    storageBucket: "socklessbot-4cb16.firebasestorage.app",
+    messagingSenderId: "217505348422",
+    appId: "1:217505348422:web:ba081cecab0f3e9d584347"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const database = getDatabase(app);
+
 document.addEventListener('DOMContentLoaded', function () {
     console.log("Chargement de app_index2.js après le DOM");
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyAG6168t9L96Wz8MTj195blr7LJA1dtZEI",
-        authDomain: "socklessbot-52f51.firebaseapp.com",
-        databaseURL: "https://socklessbot-52f51-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "socklessbot-52f51",
-        storageBucket: "socklessbot-52f51.firebasestorage.app",
-        messagingSenderId: "888488399692",
-        appId: "1:888488399692:web:7d7d7e9f82eadc117ef5e9",
-        measurementId: "G-5G1BJ3L3DS"
-    };
-
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    console.log("Firebase initialisé avec succès");
-
-    // Initialize Authentication and Database
-    const auth = firebase.auth();
-    const database = firebase.database();
 
     function getParameterByName(name, url = window.location.href) {
         name = name.replace(/[\\[\\]]/g, '\\$&');
@@ -40,12 +38,11 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log("Nom récupéré :", telegramUsername);
     console.log("Avatar récupéré :", avatar);
 
-    // Vérification que les éléments existent bien avant de les modifier
     const usernameElement = document.getElementById("username");
     const avatarElement = document.getElementById("avatar");
 
     if (usernameElement) {
-        usernameElement.textContent = `👤 ${telegramUsername}`;
+        usernameElement.textContent = ` ${telegramUsername}`;
     } else {
         console.error("Élément username introuvable.");
     }
@@ -57,16 +54,13 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error("Élément avatar introuvable.");
     }
 
-    // Enregistrer le nombre de connexions
     let connectionCount = localStorage.getItem('connectionCount') || 0;
     connectionCount = parseInt(connectionCount) + 1;
     localStorage.setItem('connectionCount', connectionCount);
     console.log("Nombre de connexions:", connectionCount);
 
-    // Enregistrer la dernière heure de connexion
     localStorage.setItem('lastConnectionTime', new Date().toISOString());
 
-    // Enregistrer le nombre de tapotements
     let tapCount = localStorage.getItem('tapCount') || 0;
     const sockElement = document.getElementById("sock");
     const tapCountDisplay = document.getElementById('tapCountDisplay');
@@ -81,12 +75,10 @@ document.addEventListener('DOMContentLoaded', function () {
         sockElement.classList.add('clicked');
         setTimeout(() => sockElement.classList.remove('clicked'), 500);
 
-        // Mettre à jour l'affichage du nombre de tapotements
         if (tapCountDisplay) {
             tapCountDisplay.textContent = tapCount;
         }
 
-        // Mettre à jour les données dans Firebase
         sendDataToServer();
     });
 
@@ -96,32 +88,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
         while (attempts < maxAttempts) {
             try {
-                const user = auth.currentUser;
-                if (user) {
-                    console.log("Utilisateur authentifié:", user.uid);
-                    sendDataToServer();
-                    return;
-                } else {
-                    console.log("Aucun utilisateur authentifié, tentative de connexion...");
-                }
-
-                // Vérifiez si l'utilisateur existe déjà dans Firebase
-                const snapshot = await database.ref('users/' + telegramUsername).once('value');
+                const snapshot = await once(ref(database, 'users/' + telegramUsername), 'value');
                 if (snapshot.exists()) {
-                    // L'utilisateur existe, connectez-le
                     console.log("Utilisateur existant, connexion en cours...");
-                    await auth.signInWithEmailAndPassword(telegramUsername + "@telegram.com", "defaultpassword");
+                    await signInWithEmailAndPassword(auth, telegramUsername + "@telegram.com", "defaultpassword");
                     console.log("Utilisateur connecté avec succès");
-                    sendDataToServer();
-                    return;
                 } else {
-                    // L'utilisateur n'existe pas, créez-le
                     console.log("Nouvel utilisateur, création en cours...");
-                    await auth.createUserWithEmailAndPassword(telegramUsername + "@telegram.com", "defaultpassword");
+                    await createUserWithEmailAndPassword(auth, telegramUsername + "@telegram.com", "defaultpassword");
                     console.log("Utilisateur créé avec succès");
-                    sendDataToServer();
-                    return;
                 }
+                sendDataToServer();
+                return;
             } catch (error) {
                 attempts++;
                 console.error(`Tentative ${attempts} échouée:`, error);
@@ -133,30 +111,27 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Envoyer les données au serveur
     function sendDataToServer() {
         const user = auth.currentUser;
         if (user) {
             const data = {
-                username: user.uid, // Utiliser l'UID de l'utilisateur authentifié
+                username: user.uid,
                 lastConnectionTime: localStorage.getItem('lastConnectionTime'),
-                connectionCount: connectionCount,
-                tapCount: tapCount
+                connectionCount: localStorage.getItem('connectionCount'),
+                tapCount: localStorage.getItem('tapCount')
             };
 
-            // Envoi des données à Firebase Realtime Database
-            database.ref('users/' + user.uid).set(data, (error) => {
-                if (error) {
-                    console.error('Erreur lors de l\'envoi des données:', error);
-                } else {
+            set(ref(database, 'users/' + user.uid), data)
+                .then(() => {
                     console.log('Données envoyées avec succès à Firebase');
-                }
-            });
+                })
+                .catch((error) => {
+                    console.error('Erreur lors de l\'envoi des données:', error);
+                });
         } else {
             console.error('Aucun utilisateur authentifié');
         }
     }
 
-    // Gérer l'authentification au chargement de la page
     handleTelegramAuth();
 });
