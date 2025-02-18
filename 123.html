@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Firebase Auth</title>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js";
+  <title>Test Firebase</title>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js";
 
     const firebaseConfig = {
             apiKey: "AIzaSyAG6168t9L96Wz8MTj195blr7LJA1dtZEI",
@@ -19,45 +17,21 @@
             measurementId: "G-5G1BJ3L3DS"
         };
 
-        // Initialiser Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app); // Récupérer l'instance d'authentification
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-        document.getElementById('createUserBtn').addEventListener('click', () => {
-            const email = "testuser@example.com";
-            const password = "testpassword";
+    console.log("Firebase initialisé:", app, auth); // Vérifiez si app et auth sont définis
 
-            createUserWithEmailAndPassword(auth, email, password) // Utiliser createUserWithEmailAndPassword avec auth
-                .then(userCredential => {
-                    console.log("Utilisateur créé avec succès:", userCredential.user.uid);
-                    document.getElementById('output').innerText = "Utilisateur créé avec succès!";
-                })
-                .catch(error => {
-                    console.error("Erreur lors de la création de l'utilisateur:", error);
-                    document.getElementById('output').innerText = "Erreur lors de la création de l'utilisateur: " + error.message; // Afficher le message d'erreur pour le débogage
-                });
-        });
+    // Test d'une fonction (même vide pour l'instant)
+    function testSignIn() {
+        console.log("Fonction testSignIn appelée");
+    }
 
-        document.getElementById('signInBtn').addEventListener('click', () => {
-            const email = "testuser@example.com";
-            const password = "testpassword";
+    testSignIn();
 
-            signInWithEmailAndPassword(auth, email, password) // Utiliser signInWithEmailAndPassword avec auth
-                .then(userCredential => {
-                    console.log("Utilisateur connecté avec succès:", userCredential.user.uid);
-                    document.getElementById('output').innerText = "Utilisateur connecté avec succès!";
-                })
-                .catch(error => {
-                    console.error("Erreur lors de la connexion de l'utilisateur:", error);
-                    document.getElementById('output').innerText = "Erreur lors de la connexion de l'utilisateur: " + error.message; // Afficher le message d'erreur
-                });
-        });
-    </script>
+  </script>
 </head>
 <body>
-    <h1>Test Firebase Authentication</h1>
-    <button id="createUserBtn">Créer un Utilisateur</button>
-    <button id="signInBtn">Se Connecter</button>
-    <div id="output"></div>
+  <h1>Test</h1>
 </body>
 </html>
