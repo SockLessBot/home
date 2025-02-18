@@ -29,8 +29,13 @@ document.addEventListener('DOMContentLoaded', function () {
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
 
-    let telegramUsername = getParameterByName('username') || sessionStorage.getItem('username') || "Utilisateur inconnu";
+    let telegramUsername = getParameterByName('username') || sessionStorage.getItem('username');
     let avatar = getParameterByName('avatar') || sessionStorage.getItem('avatar') || "default_avatar.png";
+
+    if (!telegramUsername) {
+        window.location.href = "soon.html";
+        return;
+    }
 
     console.log("Nom récupéré :", telegramUsername);
     console.log("Avatar récupéré :", avatar);
@@ -85,46 +90,37 @@ document.addEventListener('DOMContentLoaded', function () {
         sendDataToServer();
     });
 
-    // Fonction pour créer ou connecter un utilisateur Firebase avec les informations Telegram
-    function handleTelegramAuth() {
-        const user = auth.currentUser;
-        if (user) {
-            console.log("Utilisateur authentifié:", user.uid);
-            sendDataToServer();
-        } else {
-            console.log("Aucun utilisateur authentifié, tentative de connexion avec Telegram...");
-            const telegramUserId = telegramUsername; // Utilisez un identifiant unique pour Telegram
+    async function handleTelegramAuth() {
+        const telegramUserId = telegramUsername; // Utilisez un identifiant unique pour Telegram
+        let attempts = 0;
+        const maxAttempts = 3;
 
-            // Vérifiez si l'utilisateur existe déjà dans Firebase
-            database.ref('users/' + telegramUserId).once('value')
-                .then(snapshot => {
-                    if (snapshot.exists()) {
-                        // L'utilisateur existe, connectez-le
-                        console.log("Utilisateur existant, connexion en cours...");
-                        auth.signInWithCustomToken(telegramUserId)
-                            .then(() => {
-                                console.log("Utilisateur connecté avec succès");
-                                sendDataToServer();
-                            })
-                            .catch(error => {
-                                console.error("Erreur lors de la connexion de l'utilisateur:", error);
-                            });
-                    } else {
-                        // L'utilisateur n'existe pas, créez-le
-                        console.log("Nouvel utilisateur, création en cours...");
-                        auth.createUserWithEmailAndPassword(telegramUserId + "@telegram.com", "defaultpassword")
-                            .then(userCredential => {
-                                console.log("Utilisateur créé avec succès");
-                                sendDataToServer();
-                            })
-                            .catch(error => {
-                                console.error("Erreur lors de la création de l'utilisateur:", error);
-                            });
-                    }
-                })
-                .catch(error => {
-                    console.error("Erreur lors de la vérification de l'utilisateur:", error);
-                });
+        while (attempts < maxAttempts) {
+            try {
+                const snapshot = await database.ref('users/' + telegramUserId).once('value');
+                if (snapshot.exists()) {
+                    // L'utilisateur existe, connectez-le
+                    console.log("Utilisateur existant, connexion en cours...");
+                    await auth.signInWithCustomToken(telegramUserId);
+                    console.log("Utilisateur connecté avec succès");
+                    sendDataToServer();
+                    return;
+                } else {
+                    // L'utilisateur n'existe pas, créez-le
+                    console.log("Nouvel utilisateur, création en cours...");
+                    await auth.createUserWithEmailAndPassword(telegramUserId + "@telegram.com", "defaultpassword");
+                    console.log("Utilisateur créé avec succès");
+                    sendDataToServer();
+                    return;
+                }
+            } catch (error) {
+                attempts++;
+                console.error(`Tentative ${attempts} échouée:`, error);
+                if (attempts === maxAttempts) {
+                    console.error("Trois tentatives échouées, redirection vers la page de maintenance.");
+                    window.location.href = "soon.html";
+                }
+            }
         }
     }
 
