@@ -97,6 +97,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         while (attempts < maxAttempts) {
             try {
+                const user = auth.currentUser;
+                if (user) {
+                    console.log("Utilisateur authentifié:", user.uid);
+                } else {
+                    console.log("Aucun utilisateur authentifié, tentative de connexion...");
+                }
+
                 const snapshot = await database.ref('users/' + telegramUserId).once('value');
                 if (snapshot.exists()) {
                     // L'utilisateur existe, connectez-le
