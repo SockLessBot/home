@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const firebaseConfig = {
         apiKey: "AIzaSyAG6168t9L96Wz8MTj195blr7LJA1dtZEI",
         authDomain: "socklessbot-52f51.firebaseapp.com",
-        databaseURL: "https://socklessbot-52f51-default-rtdb.europe-west1.firebasedatabase.app", // URL mise à jour
+        databaseURL: "https://socklessbot-52f51-default-rtdb.europe-west1.firebasedatabase.app",
         projectId: "socklessbot-52f51",
         storageBucket: "socklessbot-52f51.firebasestorage.app",
         messagingSenderId: "888488399692",
@@ -29,10 +29,10 @@ document.addEventListener('DOMContentLoaded', function () {
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
 
-    let username = getParameterByName('username') || sessionStorage.getItem('username') || "Utilisateur inconnu";
+    let telegramUsername = getParameterByName('username') || sessionStorage.getItem('username') || "Utilisateur inconnu";
     let avatar = getParameterByName('avatar') || sessionStorage.getItem('avatar') || "default_avatar.png";
 
-    console.log("Nom récupéré :", username);
+    console.log("Nom récupéré :", telegramUsername);
     console.log("Avatar récupéré :", avatar);
 
     // Vérification que les éléments existent bien avant de les modifier
@@ -40,14 +40,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const avatarElement = document.getElementById("avatar");
 
     if (usernameElement) {
-        usernameElement.textContent = `👤 ${username}`;
+        usernameElement.textContent = `👤 ${telegramUsername}`;
     } else {
         console.error("Élément username introuvable.");
     }
 
     if (avatarElement) {
         avatarElement.src = avatar;
-        avatarElement.alt = `Avatar de ${username}`;
+        avatarElement.alt = `Avatar de ${telegramUsername}`;
     } else {
         console.error("Élément avatar introuvable.");
     }
@@ -85,6 +85,42 @@ document.addEventListener('DOMContentLoaded', function () {
         sendDataToServer();
     });
 
+    // Fonction pour créer ou connecter un utilisateur Firebase avec les informations Telegram
+    function handleTelegramAuth() {
+        const telegramUserId = telegramUsername; // Utilisez un identifiant unique pour Telegram
+
+        // Vérifiez si l'utilisateur existe déjà dans Firebase
+        database.ref('users/' + telegramUserId).once('value')
+            .then(snapshot => {
+                if (snapshot.exists()) {
+                    // L'utilisateur existe, connectez-le
+                    console.log("Utilisateur existant, connexion en cours...");
+                    auth.signInWithCustomToken(telegramUserId)
+                        .then(() => {
+                            console.log("Utilisateur connecté avec succès");
+                            sendDataToServer();
+                        })
+                        .catch(error => {
+                            console.error("Erreur lors de la connexion de l'utilisateur:", error);
+                        });
+                } else {
+                    // L'utilisateur n'existe pas, créez-le
+                    console.log("Nouvel utilisateur, création en cours...");
+                    auth.createUserWithEmailAndPassword(telegramUserId + "@telegram.com", "defaultpassword")
+                        .then(userCredential => {
+                            console.log("Utilisateur créé avec succès");
+                            sendDataToServer();
+                        })
+                        .catch(error => {
+                            console.error("Erreur lors de la création de l'utilisateur:", error);
+                        });
+                }
+            })
+            .catch(error => {
+                console.error("Erreur lors de la vérification de l'utilisateur:", error);
+            });
+    }
+
     // Envoyer les données au serveur
     function sendDataToServer() {
         const user = auth.currentUser;
@@ -109,13 +145,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Envoyer les données au chargement de la page
-    auth.onAuthStateChanged(function(user) {
-        if (user) {
-            console.log("Utilisateur authentifié:", user.uid);
-            sendDataToServer();
-        } else {
-            console.log("Aucun utilisateur authentifié au chargement de la page");
-        }
-    });
+    // Gérer l'authentification au chargement de la page
+    handleTelegramAuth();
 });
