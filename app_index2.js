@@ -87,38 +87,45 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Fonction pour créer ou connecter un utilisateur Firebase avec les informations Telegram
     function handleTelegramAuth() {
-        const telegramUserId = telegramUsername; // Utilisez un identifiant unique pour Telegram
+        const user = auth.currentUser;
+        if (user) {
+            console.log("Utilisateur authentifié:", user.uid);
+            sendDataToServer();
+        } else {
+            console.log("Aucun utilisateur authentifié, tentative de connexion avec Telegram...");
+            const telegramUserId = telegramUsername; // Utilisez un identifiant unique pour Telegram
 
-        // Vérifiez si l'utilisateur existe déjà dans Firebase
-        database.ref('users/' + telegramUserId).once('value')
-            .then(snapshot => {
-                if (snapshot.exists()) {
-                    // L'utilisateur existe, connectez-le
-                    console.log("Utilisateur existant, connexion en cours...");
-                    auth.signInWithCustomToken(telegramUserId)
-                        .then(() => {
-                            console.log("Utilisateur connecté avec succès");
-                            sendDataToServer();
-                        })
-                        .catch(error => {
-                            console.error("Erreur lors de la connexion de l'utilisateur:", error);
-                        });
-                } else {
-                    // L'utilisateur n'existe pas, créez-le
-                    console.log("Nouvel utilisateur, création en cours...");
-                    auth.createUserWithEmailAndPassword(telegramUserId + "@telegram.com", "defaultpassword")
-                        .then(userCredential => {
-                            console.log("Utilisateur créé avec succès");
-                            sendDataToServer();
-                        })
-                        .catch(error => {
-                            console.error("Erreur lors de la création de l'utilisateur:", error);
-                        });
-                }
-            })
-            .catch(error => {
-                console.error("Erreur lors de la vérification de l'utilisateur:", error);
-            });
+            // Vérifiez si l'utilisateur existe déjà dans Firebase
+            database.ref('users/' + telegramUserId).once('value')
+                .then(snapshot => {
+                    if (snapshot.exists()) {
+                        // L'utilisateur existe, connectez-le
+                        console.log("Utilisateur existant, connexion en cours...");
+                        auth.signInWithCustomToken(telegramUserId)
+                            .then(() => {
+                                console.log("Utilisateur connecté avec succès");
+                                sendDataToServer();
+                            })
+                            .catch(error => {
+                                console.error("Erreur lors de la connexion de l'utilisateur:", error);
+                            });
+                    } else {
+                        // L'utilisateur n'existe pas, créez-le
+                        console.log("Nouvel utilisateur, création en cours...");
+                        auth.createUserWithEmailAndPassword(telegramUserId + "@telegram.com", "defaultpassword")
+                            .then(userCredential => {
+                                console.log("Utilisateur créé avec succès");
+                                sendDataToServer();
+                            })
+                            .catch(error => {
+                                console.error("Erreur lors de la création de l'utilisateur:", error);
+                            });
+                    }
+                })
+                .catch(error => {
+                    console.error("Erreur lors de la vérification de l'utilisateur:", error);
+                });
+        }
     }
 
     // Envoyer les données au serveur
