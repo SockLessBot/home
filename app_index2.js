@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Vérification que les éléments existent bien avant de les modifier
     const usernameElement = document.getElementById("username");
     const avatarElement = document.getElementById("avatar");
-    const welcomeMessageElement = document.getElementById("welcomeMessage");
 
     if (usernameElement) {
         usernameElement.textContent = `👤 ${username}`;
@@ -51,12 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
         avatarElement.alt = `Avatar de ${username}`;
     } else {
         console.error("Élément avatar introuvable.");
-    }
-
-    if (welcomeMessageElement) {
-        welcomeMessageElement.textContent = `Bienvenue, ${username} !`;
-    } else {
-        console.error("Élément welcomeMessage introuvable.");
     }
 
     // Enregistrer le nombre de connexions
