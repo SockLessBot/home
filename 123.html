@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Firebase Auth</title>
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"; // Important: compat pour garder l'ancienne syntaxe
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"; // Importation des fonctions d'authentification
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js";
 
-        // Configuration Firebase (identique à votre configuration)
-        const firebaseConfig = {
+    const firebaseConfig = {
             apiKey: "AIzaSyAG6168t9L96Wz8MTj195blr7LJA1dtZEI",
             authDomain: "socklessbot-52f51.firebaseapp.com",
             databaseURL: "https://socklessbot-52f51-default-rtdb.europe-west1.firebasedatabase.app",
