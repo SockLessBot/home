@@ -1,44 +1,40 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="app_index2.js"></script>
-    <title>SocklessBot User Detection</title>
-    <link rel="stylesheet" href="style_index2.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SocklessBot User Detection</title>
+  <link rel="stylesheet" href="style_index2.css">
 </head>
 <body>
-    <div class="header">
-        <div class="avatar">
-            <img id="avatar" src="default_avatar.png" alt="Avatar" width="40">
-            <span id="username">Chargement...</span>
-        </div>
-        <button class="upgrade-button" onclick="location.href='autre_page.html'">Autre Page</button>
+  <div class="header">
+    <div class="avatar">
+      <img id="avatar" src="default_avatar.png" alt="Avatar" width="40">
+      <span id="username">Chargement...</span>
     </div>
+    <button class="upgrade-button" onclick="location.href='autre_page.html'">Autre Page</button>
+  </div>
 
-    <div class="stats">
+  <div class="stats">
     <p>Nombre de tapotements : <span id="tapCountDisplay">0</span></p>
-</div>
+  </div>
 
-    
-    <div class="center">
-        <div class="sock-container">
-            <img id="sock" src="SockLessBumpSock.png" alt="Chaussette Machiavélique" class="sock">
-        </div>
+  <div class="center">
+    <div class="sock-container">
+      <img id="sock" src="SockLessBumpSock.png" alt="Chaussette Machiavélique" class="sock">
     </div>
+  </div>
 
-    <div class="footer">
-        <div class="menu">
-            <a href="#">Accueil</a>
-            <a href="#">Tâches</a>
-            <a href="#">Amis</a>
-            <a href="#">Activité</a>
-            <a href="#">Gagner</a>
-            <a href="#">Portefeuille</a>
-        </div>
+  <div class="footer">
+    <div class="menu">
+      <a href="#">Accueil</a>
+      <a href="#">Tâches</a>
+      <a href="#">Amis</a>
+      <a href="#">Activité</a>
+      <a href="#">Gagner</a>
+      <a href="#">Portefeuille</a>
     </div>
-</body>
+  </div>
+
+  <script type="module" src="app_index2.js"></script> </body>
 </html>
