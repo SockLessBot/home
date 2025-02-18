@@ -14,13 +14,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
+    console.log("Firebase initialisé avec succès");
 
     // Initialize Authentication and Database
     const auth = firebase.auth();
     const database = firebase.database();
 
     function getParameterByName(name, url = window.location.href) {
-        name = name.replace(/[\[\]]/g, '\\$&');
+        name = name.replace(/[\\[\\]]/g, '\\$&');
         let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
             results = regex.exec(url);
         if (!results) return null;
@@ -47,41 +48,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (avatarElement) {
         avatarElement.src = avatar;
+        avatarElement.alt = `Avatar de ${username}`;
     } else {
         console.error("Élément avatar introuvable.");
     }
 
     if (welcomeMessageElement) {
-        const currentHour = new Date().getHours();
-        let greeting;
-        if (currentHour < 12) {
-            greeting = "Bonjour";
-        } else if (currentHour < 18) {
-            greeting = "Bon après-midi";
-        } else {
-            greeting = "Bonsoir";
-        }
-        welcomeMessageElement.textContent = `${greeting}, ${username}!`;
+        welcomeMessageElement.textContent = `Bienvenue, ${username} !`;
+    } else {
+        console.error("Élément welcomeMessage introuvable.");
     }
 
-    // Sauvegarde dans sessionStorage pour éviter la perte après navigation
-    sessionStorage.setItem('username', username);
-    sessionStorage.setItem('avatar', avatar);
-
-    // Ajout d'un bouton de déconnexion
-    const logoutButton = document.getElementById("logoutButton");
-    if (logoutButton) {
-        logoutButton.addEventListener('click', function () {
-            sessionStorage.removeItem('username');
-            sessionStorage.removeItem('avatar');
-            window.location.reload();
-        });
-    }
-
-    // Enregistrer le temps de connexion et le nombre de connexions
+    // Enregistrer le nombre de connexions
     let connectionCount = localStorage.getItem('connectionCount') || 0;
     connectionCount = parseInt(connectionCount) + 1;
     localStorage.setItem('connectionCount', connectionCount);
+    console.log("Nombre de connexions:", connectionCount);
+
+    // Enregistrer la dernière heure de connexion
     localStorage.setItem('lastConnectionTime', new Date().toISOString());
 
     // Enregistrer le nombre de tapotements
@@ -135,7 +119,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Envoyer les données au chargement de la page
     auth.onAuthStateChanged(function(user) {
         if (user) {
+            console.log("Utilisateur authentifié:", user.uid);
             sendDataToServer();
+        } else {
+            console.log("Aucun utilisateur authentifié au chargement de la page");
         }
     });
 });
