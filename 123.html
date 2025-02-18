@@ -4,33 +4,10 @@
   <title>Test Firebase</title>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js";
-    import { getAuth } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"; // Importez getAuth ici !
-    import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js";
 
-    const firebaseConfig = {
-            apiKey: "AIzaSyAG6168t9L96Wz8MTj195blr7LJA1dtZEI",
-            authDomain: "socklessbot-52f51.firebaseapp.com",
-            databaseURL: "https://socklessbot-52f51-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "socklessbot-52f51",
-            storageBucket: "socklessbot-52f51.firebasestorage.app",
-            messagingSenderId: "888488399692",
-            appId: "1:888488399692:web:7d7d7e9f82eadc117ef5e9",
-            measurementId: "G-5G1BJ3L3DS"
-        };
+    console.log("Firebase imports OK"); // Test simple pour voir si les imports passent
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    console.log("Firebase initialisé:", app, auth); // Vérifiez si app et auth sont définis
-
-    // Test d'une fonction (même vide pour l'instant)
-    function testSignIn() {
-        console.log("Fonction testSignIn appelée");
-    }
-
-    testSignIn();
-    testCreateUser();
-    
   </script>
 </head>
 <body>
