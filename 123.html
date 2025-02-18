@@ -4,7 +4,8 @@
   <title>Test Firebase</title>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"; // Importez getAuth ici !
+    import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js";
 
     const firebaseConfig = {
             apiKey: "AIzaSyAG6168t9L96Wz8MTj195blr7LJA1dtZEI",
@@ -28,7 +29,8 @@
     }
 
     testSignIn();
-
+    testCreateUser();
+    
   </script>
 </head>
 <body>
