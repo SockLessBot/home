@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     let telegramUsername = getParameterByName('username') || sessionStorage.getItem('username');
-    let avatar = getParameterByName('avatar') || sessionStorage.getItem('avatar') || "default_avatar.png";
+    let avatar = getParameterByName('avatar') || sessionStorage.getItem('avatar') || "default_avatar.png"; // On s'en fout pour l'instant
 
     if (!telegramUsername) {
         window.location.href = "soon.html";
@@ -39,19 +39,11 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log("Avatar récupéré :", avatar);
 
     const usernameElement = document.getElementById("username");
-    const avatarElement = document.getElementById("avatar");
 
     if (usernameElement) {
         usernameElement.textContent = ` ${telegramUsername}`;
     } else {
         console.error("Élément username introuvable.");
-    }
-
-    if (avatarElement) {
-        avatarElement.src = avatar;
-        avatarElement.alt = `Avatar de ${telegramUsername}`;
-    } else {
-        console.error("Élément avatar introuvable.");
     }
 
     let connectionCount = localStorage.getItem('connectionCount') || 0;
