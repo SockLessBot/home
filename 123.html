@@ -1,1 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Firebase Auth</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+</head>
+<body>
+    <h1>Test Firebase Authentication</h1>
+    <button id="createUserBtn">Créer un Utilisateur</button>
+    <button id="signInBtn">Se Connecter</button>
+    <div id="output"></div>
 
+    <script>
+        // Configuration Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAG6168t9L96Wz8MTj195blr7LJA1dtZEI",
+            authDomain: "socklessbot-52f51.firebaseapp.com",
+            databaseURL: "https://socklessbot-52f51-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "socklessbot-52f51",
+            storageBucket: "socklessbot-52f51.firebasestorage.app",
+            messagingSenderId: "888488399692",
+            appId: "1:888488399692:web:7d7d7e9f82eadc117ef5e9",
+            measurementId: "G-5G1BJ3L3DS"
+        };
+
+        // Initialiser Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        document.getElementById('createUserBtn').addEventListener('click', () => {
+            const email = "testuser@example.com";
+            const password = "testpassword";
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    console.log("Utilisateur créé avec succès:", userCredential.user.uid);
+                    document.getElementById('output').innerText = "Utilisateur créé avec succès!";
+                })
+                .catch(error => {
+                    console.error("Erreur lors de la création de l'utilisateur:", error);
+                    document.getElementById('output').innerText = "Erreur lors de la création de l'utilisateur.";
+                });
+        });
+
+        document.getElementById('signInBtn').addEventListener('click', () => {
+            const email = "testuser@example.com";
+            const password = "testpassword";
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    console.log("Utilisateur connecté avec succès:", userCredential.user.uid);
+                    document.getElementById('output').innerText = "Utilisateur connecté avec succès!";
+                })
+                .catch(error => {
+                    console.error("Erreur lors de la connexion de l'utilisateur:", error);
+                    document.getElementById('output').innerText = "Erreur lors de la connexion de l'utilisateur.";
+                });
+        });
+    </script>
+</body>
+</html>
