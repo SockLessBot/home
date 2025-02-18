@@ -4,18 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Firebase Auth</title>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-</head>
-<body>
-    <h1>Test Firebase Authentication</h1>
-    <button id="createUserBtn">Créer un Utilisateur</button>
-    <button id="signInBtn">Se Connecter</button>
-    <div id="output"></div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"; // Important: compat pour garder l'ancienne syntaxe
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"; // Importation des fonctions d'authentification
 
-    <script>
-        // Configuration Firebase
+        // Configuration Firebase (identique à votre configuration)
         const firebaseConfig = {
             apiKey: "AIzaSyAG6168t9L96Wz8MTj195blr7LJA1dtZEI",
             authDomain: "socklessbot-52f51.firebaseapp.com",
@@ -28,28 +21,21 @@
         };
 
         // Initialiser Firebase
-        try {
-            firebase.initializeApp(firebaseConfig);
-            console.log("Firebase initialisé avec succès");
-        } catch (error) {
-            console.error("Erreur lors de l'initialisation de Firebase:", error);
-        }
-
-        const auth = firebase.auth();
-        const database = firebase.database();
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app); // Récupérer l'instance d'authentification
 
         document.getElementById('createUserBtn').addEventListener('click', () => {
             const email = "testuser@example.com";
             const password = "testpassword";
 
-            auth.createUserWithEmailAndPassword(email, password)
+            createUserWithEmailAndPassword(auth, email, password) // Utiliser createUserWithEmailAndPassword avec auth
                 .then(userCredential => {
                     console.log("Utilisateur créé avec succès:", userCredential.user.uid);
                     document.getElementById('output').innerText = "Utilisateur créé avec succès!";
                 })
                 .catch(error => {
                     console.error("Erreur lors de la création de l'utilisateur:", error);
-                    document.getElementById('output').innerText = "Erreur lors de la création de l'utilisateur.";
+                    document.getElementById('output').innerText = "Erreur lors de la création de l'utilisateur: " + error.message; // Afficher le message d'erreur pour le débogage
                 });
         });
 
@@ -57,16 +43,22 @@
             const email = "testuser@example.com";
             const password = "testpassword";
 
-            auth.signInWithEmailAndPassword(email, password)
+            signInWithEmailAndPassword(auth, email, password) // Utiliser signInWithEmailAndPassword avec auth
                 .then(userCredential => {
                     console.log("Utilisateur connecté avec succès:", userCredential.user.uid);
                     document.getElementById('output').innerText = "Utilisateur connecté avec succès!";
                 })
                 .catch(error => {
                     console.error("Erreur lors de la connexion de l'utilisateur:", error);
-                    document.getElementById('output').innerText = "Erreur lors de la connexion de l'utilisateur.";
+                    document.getElementById('output').innerText = "Erreur lors de la connexion de l'utilisateur: " + error.message; // Afficher le message d'erreur
                 });
         });
     </script>
+</head>
+<body>
+    <h1>Test Firebase Authentication</h1>
+    <button id="createUserBtn">Créer un Utilisateur</button>
+    <button id="signInBtn">Se Connecter</button>
+    <div id="output"></div>
 </body>
 </html>
