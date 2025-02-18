@@ -3,14 +3,63 @@
 <head>
   <title>Test Firebase</title>
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"; // Ou version plus récente
+    import { getAuth } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js";
+    import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js";
+    import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js";
 
-    console.log("Firebase imports OK"); // Test simple pour voir si les imports passent
+    const firebaseConfig = {
+      apiKey: "AIzaSyAG6168t9L96Wz8MTj195blr7LJA1dtZEI", // Remplacez par vos clés API
+      authDomain: "socklessbot-52f51.firebaseapp.com",
+      databaseURL: "https://socklessbot-52f51-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "socklessbot-52f51",
+      storageBucket: "socklessbot-52f51.firebasestorage.app",
+      messagingSenderId: "888488399692",
+      appId: "1:888488399692:web:7d7d7e9f82eadc117ef5e9",
+      measurementId: "G-5G1BJ3L3DS"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    console.log("Firebase initialisé:", app, auth);
+
+    document.getElementById('createUserBtn').addEventListener('click', () => {
+      const email = "testuser@example.com"; // Pour les tests
+      const password = "testpassword"; // Pour les tests
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(userCredential => {
+          console.log("Utilisateur créé:", userCredential.user);
+          document.getElementById('output').innerText = "Utilisateur créé avec succès !";
+        })
+        .catch(error => {
+          console.error("Erreur création utilisateur:", error);
+          document.getElementById('output').innerText = "Erreur: " + error.message; // Afficher le message d'erreur
+        });
+    });
+
+    document.getElementById('signInBtn').addEventListener('click', () => {
+      const email = "testuser@example.com"; // Pour les tests
+      const password = "testpassword"; // Pour les tests
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then(userCredential => {
+          console.log("Utilisateur connecté:", userCredential.user);
+          document.getElementById('output').innerText = "Utilisateur connecté avec succès !";
+        })
+        .catch(error => {
+          console.error("Erreur connexion utilisateur:", error);
+          document.getElementById('output').innerText = "Erreur: " + error.message; // Afficher le message d'erreur
+        });
+    });
 
   </script>
 </head>
 <body>
-  <h1>Test</h1>
+  <h1>Test Firebase Auth</h1>
+  <button id="createUserBtn">Créer un Utilisateur</button>
+  <button id="signInBtn">Se Connecter</button>
+  <div id="output"></div>
 </body>
 </html>
